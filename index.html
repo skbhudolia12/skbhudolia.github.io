@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Love Journey</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #fff0f5, #ffe6f2, #ffd9eb);
+            color: #8a3a62;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .heart {
+            position: absolute;
+            color: rgba(255, 105, 180, 0.3);
+            font-size: 20px;
+            animation: float 8s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        #splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffb7d5, #ff8cb4);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s ease;
+            overflow: hidden;
+        }
+        
+        .flower-container {
+            position: relative;
+            height: 70vh;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        
+        .flower {
+            position: absolute;
+            bottom: 0;
+            width: 120px;
+            height: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: growStem 2s forwards;
+        }
+        
+        .flower:nth-child(1) { 
+            left: 15%; 
+            animation-delay: 0.3s;
+            z-index: 5;
+        }
+        .flower:nth-child(2) { 
+            left: 30%; 
+            animation-delay: 0.6s;
+            z-index: 4;
+        }
+        .flower:nth-child(3) { 
+            left: 45%; 
+            animation-delay: 0.9s;
+            z-index: 3;
+        }
+        .flower:nth-child(4) { 
+            left: 60%; 
+            animation-delay: 1.2s;
+            z-index: 2;
+        }
+        .flower:nth-child(5) { 
+            left: 75%; 
+            animation-delay: 1.5s;
+            z-index: 1;
+        }
+        
+        @keyframes growStem {
+            0% { height: 0; }
+            100% { height: 70%; }
+        }
+        
+        .stem {
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(to bottom, #4caf50, #2e7d32);
+            border-radius: 4px;
+            position: relative;
+        }
+        
+        .flower-head {
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: bloom 1.5s forwards;
+            animation-delay: 1.5s;
+            opacity: 0;
+        }
+        
+        @keyframes bloom {
+            0% { 
+                transform: scale(0.1) rotate(0deg);
+                opacity: 0;
+            }
+            70% {
+                opacity: 1;
+            }
+            100% { 
+                transform: scale(1) rotate(360deg);
+                opacity: 1;
+            }
+        }
+        
+        .petals {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff66b3, #ff1493);
+            box-shadow: inset -5px -10px 15px rgba(156, 0, 78, 0.3);
+        }
+        
+        .flower:nth-child(1) .petals { transform: rotate(0deg); }
+        .flower:nth-child(2) .petals { transform: rotate(72deg); }
+        .flower:nth-child(3) .petals { transform: rotate(144deg); }
+        .flower:nth-child(4) .petals { transform: rotate(216deg); }
+        .flower:nth-child(5) .petals { transform: rotate(288deg); }
+        
+        .leaf {
+            position: absolute;
+            width: 40px;
+            height: 25px;
+            background: #66bb6a;
+            border-radius: 50%;
+            z-index: -1;
+            animation: growLeaf 1s forwards;
+            animation-delay: 2s;
+            opacity: 0;
+        }
+        
+        .leaf.left {
+            left: -25px;
+            top: 40%;
+            transform: rotate(-30deg);
+        }
+        
+        .leaf.right {
+            right: -25px;
+            top: 60%;
+            transform: rotate(30deg);
+        }
+        
+        @keyframes growLeaf {
+            0% { 
+                transform: scale(0) rotate(0deg);
+                opacity: 0;
+            }
+            100% { 
+                transform: scale(1) rotate(var(--rotation));
+                opacity: 1;
+            }
+        }
+        
+        .welcome-text {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            margin-top: 50px;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
+            animation-delay: 3s;
+            text-align: center;
+            line-height: 1.3;
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: none;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+        }
+        
+        .title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ff1493, #ff69b4, #ff85a2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #c95c8c;
+            font-weight: 300;
+        }
+        
+        .nav-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .nav-card {
+            width: 300px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 182, 193, 0.3);
+        }
+        
+        .nav-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .nav-card i {
+            font-size: 50px;
+            color: #ff69b4;
+            margin-bottom: 15px;
+        }
+        
+        .nav-card h2 {
+            font-size: 1.8rem;
+            color: #d44d8c;
+            margin-bottom: 10px;
+        }
+        
+        .nav-card p {
+            color: #a53a6d;
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .page {
+            display: none;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 182, 193, 0.3);
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ffc0cb;
+        }
+        
+        .page-title {
+            font-size: 2.2rem;
+            color: #d44d8c;
+        }
+        
+        .back-btn {
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+        
+        .timer-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        
+        .timer-unit {
+            text-align: center;
+            background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+            border-radius: 15px;
+            padding: 20px 15px;
+            min-width: 150px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timer-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .timer-label {
+            font-size: 1.2rem;
+            color: white;
+            margin-top: 10px;
+            font-weight: 600;
+        }
+        
+        .diary-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        
+        .date-picker {
+            padding: 12px;
+            border-radius: 10px;
+            border: 2px solid #ffc0cb;
+            background: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            color: #8a3a62;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+        }
+        
+        .diary-entry-container {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #ffc0cb;
+        }
+        
+        .diary-entry-title {
+            font-size: 1.5rem;
+            color: #d44d8c;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .diary-entry-content {
+            white-space: pre-wrap;
+            margin-bottom: 15px;
+        }
+        
+        .entry-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .edit-btn, .delete-btn {
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .edit-btn {
+            background: #ffb6c1;
+            color: white;
+        }
+        
+        .delete-btn {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        #diary-form {
+            margin-bottom: 30px;
+        }
+        
+        #diary-title {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border: 2px solid #ffc0cb;
+            background: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            color: #8a3a62;
+        }
+        
+        .diary-entry {
+            width: 100%;
+            min-height: 200px;
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid #ffc0cb;
+            background: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            color: #8a3a62;
+            resize: vertical;
+            margin-bottom: 20px;
+        }
+        
+        .diary-entry:focus {
+            outline: none;
+            border-color: #ff69b4;
+        }
+        
+        .save-btn {
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: block;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+        
+        .save-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 105, 180, 0.4);
+        }
+        
+        .upload-section {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px dashed #ffc0cb;
+        }
+        
+        .upload-btn {
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .gallery-item {
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 105, 180, 0.8);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .gallery-date {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #c95c8c;
+            font-size: 1.1rem;
+            margin-top: 40px;
+        }
+        
+        .footer-heart {
+            color: #ff1493;
+            animation: heartbeat 1.2s infinite;
+            display: inline-block;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            5% { transform: scale(1.2); }
+            10% { transform: scale(1.1); }
+            15% { transform: scale(1.3); }
+            50% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+        
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.2rem;
+            }
+            
+            .welcome-text {
+                font-size: 2rem;
+            }
+            
+            .nav-cards {
+                gap: 20px;
+            }
+            
+            .nav-card {
+                width: 100%;
+                max-width: 350px;
+                height: 180px;
+            }
+            
+            .timer-unit {
+                min-width: 120px;
+            }
+            
+            .timer-value {
+                font-size: 2.8rem;
+                height: 70px;
+            }
+            
+            .flower {
+                width: 80px;
+            }
+            
+            .flower-head {
+                width: 70px;
+                height: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    
+    <div id="splash">
+        <div class="flower-container">
+            <div class="flower">
+                <div class="stem"></div>
+                <div class="flower-head">
+                    <div class="petals"></div>
+                </div>
+                <div class="leaf left" style="--rotation: -30deg;"></div>
+                <div class="leaf right" style="--rotation: 30deg;"></div>
+            </div>
+            <div class="flower">
+                <div class="stem"></div>
+                <div class="flower-head">
+                    <div class="petals"></div>
+                </div>
+                <div class="leaf left" style="--rotation: -20deg;"></div>
+                <div class="leaf right" style="--rotation: 20deg;"></div>
+            </div>
+            <div class="flower">
+                <div class="stem"></div>
+                <div class="flower-head">
+                    <div class="petals"></div>
+                </div>
+                <div class="leaf left" style="--rotation: -25deg;"></div>
+                <div class="leaf right" style="--rotation: 25deg;"></div>
+            </div>
+            <div class="flower">
+                <div class="stem"></div>
+                <div class="flower-head">
+                    <div class="petals"></div>
+                </div>
+                <div class="leaf left" style="--rotation: -35deg;"></div>
+                <div class="leaf right" style="--rotation: 35deg;"></div>
+            </div>
+            <div class="flower">
+                <div class="stem"></div>
+                <div class="flower-head">
+                    <div class="petals"></div>
+                </div>
+                <div class="leaf left" style="--rotation: -15deg;"></div>
+                <div class="leaf right" style="--rotation: 15deg;"></div>
+            </div>
+        </div>
+        <div class="welcome-text">To My Forever Love<br>Our Journey Begins</div>
+    </div>
+    
+    <div class="container" id="main-content">
+        <header>
+            <h1 class="title">Our Love Journey</h1>
+            <p class="subtitle">Every moment with you is a cherished memory</p>
+        </header>
+        
+        <div class="nav-cards">
+            <div class="nav-card" onclick="showPage('countup')">
+                <i class="fas fa-heart"></i>
+                <h2>Our Time</h2>
+                <p>See how long we've been together</p>
+            </div>
+            
+            <div class="nav-card" onclick="showPage('diary')">
+                <i class="fas fa-book"></i>
+                <h2>Love Diary</h2>
+                <p>Write and read our special memories</p>
+            </div>
+            
+            <div class="nav-card" onclick="showPage('gallery')">
+                <i class="fas fa-images"></i>
+                <h2>Our Memories</h2>
+                <p>Relive our beautiful moments together</p>
+            </div>
+        </div>
+        
+        <div id="countup" class="page">
+            <div class="page-header">
+                <h2 class="page-title">Our Time Together</h2>
+                <button class="back-btn" onclick="showPage('home')">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+            </div>
+            
+            <div class="timer-container">
+                <div class="timer-unit">
+                    <div class="timer-value" id="years">0</div>
+                    <div class="timer-label">YEARS</div>
+                </div>
+                
+                <div class="timer-unit">
+                    <div class="timer-value" id="months">0</div>
+                    <div class="timer-label">MONTHS</div>
+                </div>
+                
+                <div class="timer-unit">
+                    <div class="timer-value" id="days">0</div>
+                    <div class="timer-label">DAYS</div>
+                </div>
+                
+                <div class="timer-unit">
+                    <div class="timer-value" id="hours">0</div>
+                    <div class="timer-label">HOURS</div>
+                </div>
+                
+                <div class="timer-unit">
+                    <div class="timer-value" id="minutes">0</div>
+                    <div class="timer-label">MINUTES</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="diary" class="page">
+            <div class="page-header">
+                <h2 class="page-title">Our Love Diary</h2>
+                <button class="back-btn" onclick="showPage('home')">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+            </div>
+            
+            <div class="diary-controls">
+                <button class="nav-btn" onclick="prevDay()">
+                    <i class="fas fa-chevron-left"></i> Previous
+                </button>
+                
+                <input type="date" class="date-picker" id="diary-date">
+                
+                <button class="nav-btn" onclick="nextDay()">
+                    Next <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            
+            <div id="diary-form">
+                <input type="text" id="diary-title" placeholder="Title of your memory...">
+                <textarea class="diary-entry" id="diary-entry" placeholder="Write your thoughts about this special day..."></textarea>
+                <button class="save-btn" onclick="saveEntry()">
+                    <i class="fas fa-save"></i> Save This Memory
+                </button>
+            </div>
+            
+            <div id="saved-entries"></div>
+        </div>
+        
+        <div id="gallery" class="page">
+            <div class="page-header">
+                <h2 class="page-title">Our Precious Memories</h2>
+                <button class="back-btn" onclick="showPage('home')">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+            </div>
+            
+            <div class="upload-section">
+                <h3>Add New Memory</h3>
+                <input type="text" id="photo-title" placeholder="Memory title" style="width:100%;padding:10px;margin-bottom:10px;border-radius:8px;border:1px solid #ffc0cb;">
+                <input type="date" id="photo-date" style="width:100%;padding:10px;margin-bottom:10px;border-radius:8px;border:1px solid #ffc0cb;">
+                <input type="file" id="photo-upload" accept="image/*" style="width:100%;margin-bottom:10px;">
+                <button class="upload-btn" onclick="uploadPhoto()">
+                    <i class="fas fa-upload"></i> Upload Memory
+                </button>
+            </div>
+            
+            <div class="gallery-grid" id="gallery-container">
+                <!-- Gallery items will be added here dynamically -->
+            </div>
+        </div>
+        
+        <footer>
+            <p>Created with <span class="footer-heart"><i class="fas fa-heart"></i></span> for My Beloved</p>
+            <p>Every day with you is a blessing</p>
+        </footer>
+    </div>
+
+    <script>
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const heartCount = 30;
+            
+            for (let i = 0; i < heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '<i class="fas fa-heart"></i>';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heartsContainer.appendChild(heart);
+            }
+        }
+        
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.style.display = 'none';
+            });
+            
+            if (pageId === 'home') {
+                document.getElementById('main-content').style.display = 'block';
+                pages.forEach(page => {
+                    page.style.display = 'none';
+                });
+            } else {
+                document.getElementById(pageId).style.display = 'block';
+            }
+            
+            if (pageId === 'countup') {
+                updateCountup();
+                setInterval(updateCountup, 60000);
+            }
+            
+            if (pageId === 'gallery') {
+                loadGallery();
+            }
+        }
+        
+        function updateCountup() {
+            const startDate = new Date(2024, 10, 6, 0, 11);
+            const now = new Date();
+            const diff = now - startDate;
+            
+            const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+            const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.44)) % 12;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24)) % 30;
+            const hours = Math.floor(diff / (1000 * 60 * 60)) % 24;
+            const minutes = Math.floor(diff / (1000 * 60)) % 60;
+            
+            document.getElementById('years').textContent = years;
+            document.getElementById('months').textContent = months;
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+        }
+        
+        let currentDate = new Date();
+        let currentEditingId = null;
+
+        function updateDiaryDate() {
+            const dateString = currentDate.toISOString().split('T')[0];
+            document.getElementById('diary-date').value = dateString;
+            loadEntries();
+        }
+
+        function prevDay() {
+            currentDate.setDate(currentDate.getDate() - 1);
+            updateDiaryDate();
+        }
+
+        function nextDay() {
+            currentDate.setDate(currentDate.getDate() + 1);
+            updateDiaryDate();
+        }
+
+        function loadEntries() {
+            const dateString = document.getElementById('diary-date').value;
+            const entriesContainer = document.getElementById('saved-entries');
+            entriesContainer.innerHTML = '';
+            
+            const entries = JSON.parse(localStorage.getItem('diary_' + dateString)) || [];
+            
+            if (entries.length === 0) {
+                entriesContainer.innerHTML = '<p style="text-align:center;color:#c95c8c;">No entries for this day yet.</p>';
+                return;
+            }
+            
+            entries.forEach((entry, index) => {
+                const entryDiv = document.createElement('div');
+                entryDiv.className = 'diary-entry-container';
+                entryDiv.innerHTML = `
+                    <div class="diary-entry-title">${entry.title}</div>
+                    <div class="diary-entry-content">${entry.content}</div>
+                    <div class="entry-actions">
+                        <button class="edit-btn" onclick="editEntry('${dateString}', ${index})">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                        <button class="delete-btn" onclick="deleteEntry('${dateString}', ${index})">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                `;
+                entriesContainer.appendChild(entryDiv);
+            });
+        }
+
+        function saveEntry() {
+            const dateString = document.getElementById('diary-date').value;
+            const title = document.getElementById('diary-title').value.trim();
+            const content = document.getElementById('diary-entry').value.trim();
+            
+            if (!title || !content) {
+                alert('Please add both a title and content for your memory!');
+                return;
+            }
+            
+            let entries = JSON.parse(localStorage.getItem('diary_' + dateString)) || [];
+            
+            if (currentEditingId !== null) {
+                entries[currentEditingId] = { title, content };
+                currentEditingId = null;
+            } else {
+                entries.push({ title, content });
+            }
+            
+            localStorage.setItem('diary_' + dateString, JSON.stringify(entries));
+            document.getElementById('diary-title').value = '';
+            document.getElementById('diary-entry').value = '';
+            loadEntries();
+        }
+
+        function editEntry(dateString, index) {
+            const entries = JSON.parse(localStorage.getItem('diary_' + dateString)) || [];
+            const entry = entries[index];
+            document.getElementById('diary-title').value = entry.title;
+            document.getElementById('diary-entry').value = entry.content;
+            currentEditingId = index;
+            document.getElementById('diary-form').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function deleteEntry(dateString, index) {
+            if (!confirm('Are you sure you want to delete this memory?')) return;
+            const entries = JSON.parse(localStorage.getItem('diary_' + dateString)) || [];
+            entries.splice(index, 1);
+            localStorage.setItem('diary_' + dateString, JSON.stringify(entries));
+            loadEntries();
+        }
+
+        function uploadPhoto() {
+            const title = document.getElementById('photo-title').value.trim();
+            const date = document.getElementById('photo-date').value;
+            const fileInput = document.getElementById('photo-upload');
+            
+            if (!title || !date || !fileInput.files[0]) {
+                alert('Please fill all fields and select a photo!');
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const photoData = {
+                    title: title,
+                    date: date,
+                    image: e.target.result
+                };
+                
+                let gallery = JSON.parse(localStorage.getItem('love_gallery')) || [];
+                gallery.push(photoData);
+                localStorage.setItem('love_gallery', JSON.stringify(gallery));
+                
+                document.getElementById('photo-title').value = '';
+                document.getElementById('photo-date').value = '';
+                document.getElementById('photo-upload').value = '';
+                
+                loadGallery();
+            };
+            
+            reader.readAsDataURL(file);
+        }
+
+        function loadGallery() {
+            const galleryContainer = document.getElementById('gallery-container');
+            galleryContainer.innerHTML = '';
+            
+            let gallery = JSON.parse(localStorage.getItem('love_gallery')) || [];
+            
+            if (gallery.length === 0) {
+                gallery = [
+                    {
+                        title: "Sunset Walks",
+                        date: "2024-11-10",
+                        image: "images/01.jpg"
+                    },
+                    {
+                        title: "Coffee Date",
+                        date: "2024-11-15",
+                        image: "images/02.jpg"
+                    },
+                    {
+                        title: "Beach Day",
+                        date: "2024-11-20",
+                        image: "images/03.jpg"
+                    },
+                    {
+                        title: "Special Celebration",
+                        date: "2024-11-25",
+                        image: "images/04.jpg"
+                    },
+                    {
+                        title: "Our Adventures",
+                        date: "2024-11-30",
+                        image: "images/05.jpg"
+                    },
+                    {
+                        title: "Festival Fun",
+                        date: "2024-12-05",
+                        image: "images/06.jpg"
+                    }
+                ];
+                localStorage.setItem('our_gallery', JSON.stringify(gallery));
+            }
+            
+            gallery.forEach(photo => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.innerHTML = `
+                    <img src="${photo.image}" alt="${photo.title}">
+                    <div class="gallery-caption">${photo.title}</div>
+                    <div class="gallery-date">${photo.date}</div>
+                `;
+                galleryContainer.appendChild(galleryItem);
+            });
+        }
+
+        window.onload = function() {
+            createHearts();
+            
+            setTimeout(() => {
+                document.getElementById('splash').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('splash').style.display = 'none';
+                    document.getElementById('main-content').style.display = 'block';
+                }, 1000);
+            }, 4500);
+            
+            updateDiaryDate();
+            document.getElementById('diary-date').addEventListener('change', function() {
+                currentDate = new Date(this.value);
+                loadEntries();
+            });
+            
+            document.getElementById('photo-date').value = new Date().toISOString().split('T')[0];
+        };
+    </script>
+</body>
+</html>
